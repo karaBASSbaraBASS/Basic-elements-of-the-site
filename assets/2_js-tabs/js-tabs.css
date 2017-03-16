@@ -1,0 +1,35 @@
+.tabs__controls-item {
+	display: inline-block;
+	margin-left: 10px;
+	background: #2c3e50;
+}
+
+.tabs__controls-item:hover, 
+.tabs__controls-item.active {
+	background: #2ecc71;
+}
+
+.tabs__controls-item:first-child {
+	margin-left: 0;
+}
+
+.tabs__controls-link {
+	color: #fff;
+	text-transform: uppercase;
+	text-decoration: none;
+	display: block;
+	padding: 3px 7px;
+}
+
+.tabs__list {
+	border: 1px dashed #ccc;
+}
+
+.tabs__item {
+	list-style: none outside none;
+	display: none;
+} 
+
+.tabs__item.active {
+	display: block;
+}
