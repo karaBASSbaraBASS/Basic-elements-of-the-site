@@ -7,6 +7,10 @@ var slider = (function(){
 		init: function (){
 			var
 				_this = this;
+
+				// создаем точки для каждого слада
+				_this.createDots();
+
 				$('.slider__controls-button').on('click', function(event) {
 					event.preventDefault();
 					
@@ -41,6 +45,7 @@ var slider = (function(){
 
 		moveSlide: function(slide, direction) {
 			var
+				_this = this,
 				container = slide.closest('.slider'),
 				slides = container.find('.slider__item'),
 				activeSlide = slides.filter('active'),
@@ -58,14 +63,57 @@ var slider = (function(){
 			}
 
 			slide.css('left', reqCssPosition).addClass('inslide');
+			
 			var moveableSlide = slides.filter('.inslide');
+			
 			activeSlide.animate({left: reqSlideStrafe}, duration);
+			
 			moveableSlide.animate({left: 0}, duration, function(){
 				var $this = $(this);
 				slides.css('left', '0').removeClass('active');
 				$this.toggleClass('inslide active');
+
+			//_this.setActiveDot(container.find('.slider__dots'));
+
 			});
 
+		},
+
+		createDots: function() {
+			var
+				_this = this,
+				container = $('.slider');
+			var 
+				dotMarkup = '<li class="slider__dots-item"> \
+								<a href="#" class="slider__dots-link"></a> \
+							</li>';
+
+			container.each(function(){
+				var
+					$this = $(this),
+					slides = $this.find('.slider__item'),
+					dotContainer = $this.find('.slider__dots'); 
+
+				for (var i = 0; i < slides.length; i++) {
+					dotContainer.append(dotMarkup);
+
+				}
+				// передадим метод активных точек в каждую созданную точку
+				_this.setActiveDot(dotContainer); 
+
+			});
+		},
+
+		setActiveDot: function(container){
+			var	
+				slides = container.closest('.slider__list--wrap').find('slider__item');
+
+			container
+				.find('.slider__dots-item')
+				.eq(slides.filter('.active').index())
+				.addClass('active')
+				.siblings()
+				.removeClass('active');
 		}
 
 	}
