@@ -1,113 +1,285 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+body {
+	margin: 0;
+	padding: 0;
+	min-width: 600px;
+}
 
-@import "compass/reset";
+$one : #2ACE9E;
+$two : #3E9CD9;
+$three : #37495F;
+$four : #DB3D3F;
+$five : #BFC1C8;
+$six : #E8991A;
+$seven : #984AB5;
 
+.wrapper {
+	width: 100%;
+	text-align: center;
+  	font-size: 0px;
+}
 
-/* .wrapper {
-	width: 950px;
-	margin: 0 auto;
-}  */
+.nav {
+	position: fixed;
+	top: 0;
+	height: 50px;
+	background-color: rgba(255,255,255,0.5);
+	line-height: 50px;
+	width: 100%;
+	min-width: 600px;
+}
 
 .container {
-	width: 80%;
-	margin: 0 10%;
-	background: #c4c4c4;
-	text-align: center;
-	font-size: 0px;
-}
-
-.slider {
-//	position: relative;
-	width: 99%;
-	overflow: hidden;
-	display: inline-block;
-
-	.slider__list {
-		position: relative;
-		width: 100%;
-	}
-
-	.slider__item {
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 0;
-		width: 100%;
-
-		img {
-			width: 100%;
-			display: block;
-		}
-
-		&.active {
-			z-index: 1;
-			position: relative;
-		}
-
-		&.inslide {
-			z-index: 2;
-		}
-	}
-}
-
-.slider__controls-button {
 	position: relative;
-	top: 90px;
-	display: block;
-	z-index: 6;
-	width: 16px;
+}
+
+.nav__list {
+ 	padding: 0;
+}
+
+.nav__item {
+	display: inline;
 	font-size: 20px;
-	text-decoration: none;
-	padding: 10px 12px 6px 10px;
-	border: 1px solid #000;
-	-webkit-border-radius: 50%;
-	        border-radius: 50%;
-	background-color: rgba(255,255,255,0.5);
-	margin-top: -39px;
-	
+	border: 3px solid rgba(255,255,255,0.0);
+	padding: 5px;
+		
 	&:hover {
-	background-color: rgba(255,255,255,1);
+		border: 3px solid #fff;
 	}
 }
 
-.slider__controls-button_next {
-	right: -95%;
-	top: -180px;
+.nav__item-link {
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase; 	 
 }
 
-.slider__controls-button_prev {
-	left: 1%;
-	top: -180px;
+.active {
+	border: 3px solid #fff;
+}	
+
+li.nav__item + li.nav__item {
+	margin-left: 2%;
 }
 
-/* Кнопки смены слайдов */
-.slider__dots{ 
-    margin-top: -20px;
-	text-align: center;
-	z-index: 6;
-	position: relative;
-	top: -15px;
-    }
-.slider__dots-item {
-    margin:2px;
-    display:inline-block;
-    width:10px;
-    height:10px;
-    overflow:hidden;
-    border: 3px solid #fff;
-    -webkit-border-radius: 50%;
-            border-radius: 50%;
-    background-color: #551a8b;
-   
-	&:hover {
-    cursor:pointer;
-    background-color: #e00;
-    }
-    &.active {
-    background-color: #000;
-    }
+	
 
+.wrapper__inner {
+	
 }
+
+.section{
+	height: 700px;
+	margin-top: -45px;	
+}
+
+.section__title h1{
+	color: #fff;
+	font-size: 50px;
+	text-transform: uppercase;
+	padding-top: 100px;
+}
+
+.section__one {
+	background-color: $one;
+}
+
+.section__two {
+	background-color: $two;
+}
+
+.section__three {
+	background-color: $three;
+}
+
+.section__four {
+	background-color: $four;
+}
+
+.section__five {
+	background-color: $five;
+}
+
+.section__six {
+	background-color: $six;
+}
+
+.section__seven {
+	background-color: $seven;
+}
+
+/*------------------------TABS--------------------------*/
+
+/* Базовый контейнер табов */
+.tabs {
+  min-width: 320px;
+  max-width: 800px;
+  padding: 0px;
+  margin: 0 auto;
+  font-size: 18px;
+}
+/* Стили секций с содержанием */
+.tabs__content {
+  display: none;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+.tabs__content-description {
+  margin: 0 0 5px;
+  line-height: 1.5;
+  color: #383838;
+  /* прикрутим анимацию */
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+/* Описываем анимацию свойства opacity */
+ 
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Прячем чекбоксы */
+.tabs__item {
+  display: none;
+  position: absolute;
+}
+/* Стили переключателей вкладок (табов) */
+.tabs__label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #aaa;
+  border: 0px solid #ddd;
+  border-width: 1px 1px 1px 1px;
+  background: #f1f1f1;
+  border-radius: 3px 3px 0 0;
+}
+/* Шрифт-иконки от Font Awesome в формате Unicode */
+.tabs__label:before {
+  font-family: fontawesome;
+  font-weight: normal;
+  margin-right: 10px;
+}
+.tabs__label[for*="1"]:before {
+  content: "\f19a";
+}
+.tabs__label[for*="2"]:before {
+  content: "\f17a";
+}
+.tabs__label[for*="3"]:before {
+  content: "\f13b";
+}
+.tabs__label[for*="4"]:before {
+  content: "\f13c";
+}
+/* Изменения стиля переключателей вкладок при наведении */
+ 
+.tabs__label:hover {
+  color: #888;
+  cursor: pointer;
+}
+/* Стили для активной вкладки */
+.tabs__item:checked+label {
+  color: #555;
+  border-top: 1px solid #009933;
+  border-bottom: 1px solid #fff;
+  background: #fff;
+}
+/* Активация секций с помощью псевдокласса :checked */
+#tab1:checked~#content-tab1, #tab2:checked~#content-tab2, #tab3:checked~#content-tab3, #tab4:checked~#content-tab4 {
+  display: block;
+}
+/* Убираем текст с переключателей 
+* и оставляем иконки на малых экранах
+*/
+ 
+@media screen and (max-width: 745px) {
+  .tabs__label {
+    font-size: 0;
+  }
+  .tabs__label:before {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+/* Изменяем внутренние отступы 
+*  переключателей для малых экранов
+*/
+@media screen and (max-width: 600px) {
+  .tabs__label {
+    padding: 15px;
+  }
+}
+
+/*--------------------Accordeon----------------*/
+.accordeon {
+	width: 300px;
+	margin: 0 auto;
+	font-size: 18px;
+}
+
+ul.accordeon__list {
+	padding-left: 0;
+}
+
+.accordeon__trigger {
+	text-decoration: none;
+	color: #fff;
+	font-weight: 600;
+	background-color: $one;
+	display: block;
+	padding: 6px;
+	border: 1px solid #ddd;
+	text-align: left;
+	padding-left: 15px;
+	
+	i {
+		padding-right: 15px;
+	}
+	
+}
+	
+.accordeon__inner {
+	padding-left: 0;
+	background: #FFF;
+}
+
+.accordeon__item {
+	margin-bottom: 10px;
+	list-style: none;
+	-webkit-border-radius: 3px;
+	        border-radius: 3px;
+}
+
+.accordeon__inner-item {
+	list-style: none;
+}
+
+.accordeon__inner-link {
+	text-decoration: none;
+	color: #34495e;
+	border-bottom: 1px dotted #34495e;
+}
+
+.accordeon__inner {
+	display: none;
+} 
+	
