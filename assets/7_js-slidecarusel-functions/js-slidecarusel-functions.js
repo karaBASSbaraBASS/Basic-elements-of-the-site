@@ -2,14 +2,21 @@ var slider = (function(){
 
 	//private переменные и функции
 
+	var flag = true,
+		timerDuration = 3000,
+		timer = 0;
+
 	return {
 		// события и то что нужно по задачам
 		init: function (){
 			var
 				_this = this;
 
-				// создаем точки для каждого слада
+				// создаем точки для каждого слайда
 				_this.createDots();
+
+				// включим автопереключение
+				_this.autoSwitch();
 
 				$('.slider__controls-button').on('click', function(event) {
 					event.preventDefault();
@@ -22,6 +29,8 @@ var slider = (function(){
 						prevSlide = activeSlide.prev(),
 						firstSlide = slides.first(),
 						lastSlide = slides.last();
+
+					_this.clearTimer();
 
 					if ($this.hasClass('slider__controls-button_next')) {
 						
@@ -41,6 +50,27 @@ var slider = (function(){
 
 					}
 				});
+
+				// Клик по точкам
+				$('.slider__dots-link').on('click', function(event) {
+					event.preventDefault();
+					/* Act on the event */
+					var
+						$this = $(this),
+						dots = $this.closest('.slider__dots').find('.slider__dots-item'),
+						activeDot = dots.filter('.active'),
+						dot = $this.closest('.slider__dots-item'),
+						curDotNum = dot.index(),
+						direction = (activeDot.index() < curDotNum) ? 'forward' : 'backward';
+						reqSlide = $this.closest('.slider').find('.slider__item').eq(curDotNum);
+
+					if (!dot.hasClass('active')) {
+						_this.clearTimer();
+						_this.moveSlide(reqSlide, direction);
+					}
+					
+
+				});
 		},
 
 		moveSlide: function(slide, direction) {
@@ -54,28 +84,37 @@ var slider = (function(){
 				reqCssPosition = 0,
 				reqSlideStrafe = 0;
 
-			if (direction === 'forward') {
-				reqCssPosition = slideWidth;
-				reqSlideStrafe = -slideWidth;
-			} else if (direction === 'backward') {
-				reqCssPosition = -slideWidth;
-				reqSlideStrafe = slideWidth;
-			}
+			if (flag) {
 
-			slide.css('left', reqCssPosition).addClass('inslide');
-			
-			var moveableSlide = slides.filter('.inslide');
-			
-			activeSlide.animate({left: reqSlideStrafe}, duration);
-			
-			moveableSlide.animate({left: 0}, duration, function(){
-				var $this = $(this);
-				slides.css('left', '0').removeClass('active');
-				$this.toggleClass('inslide active');
+				flag = false;
 
-			//_this.setActiveDot(container.find('.slider__dots'));
+				if (direction === 'forward') {
+					reqCssPosition = slideWidth;
+					reqSlideStrafe = -slideWidth;
+				} else if (direction === 'backward') {
+					reqCssPosition = -slideWidth;
+					reqSlideStrafe = slideWidth;
+				}
 
-			});
+				slide.css('left', reqCssPosition).addClass('inslide');
+				
+				var moveableSlide = slides.filter('.inslide');
+				
+				activeSlide.animate({left: reqSlideStrafe}, duration);
+				
+				moveableSlide.animate({left: 0}, duration, function(){
+					var $this = $(this);
+					slides.css('left', '0').removeClass('active');
+					$this.toggleClass('inslide active');
+
+					_this.setActiveDot(container.find('.slider__dots'));
+
+					flag = true;
+
+				});
+			}	
+
+			
 
 		},
 
@@ -114,6 +153,33 @@ var slider = (function(){
 				.addClass('active')
 				.siblings()
 				.removeClass('active');
+		},
+
+		autoSwitch: function(){
+			var
+				_this = this;
+
+			timer = setInterval(function(){
+				var
+					slides = $('.slider__list .slider__item'),
+					activeSlide = slides.filter('.active'),
+					nextSlide = activeSlide.next(),
+					firstSlide = slides.first();
+
+				if (nextSlide.length) {
+					_this.moveSlide(nextSlide, 'forward');
+				} else {
+					_this.moveSlide(firstSlide, 'forward');
+				}	
+
+			}, timerDuration);
+		},
+
+		clearTimer: function(){
+			if (timer) {
+				clearInterval(timer);
+				this.autoSwitch();
+			}
 		}
 
 	}
